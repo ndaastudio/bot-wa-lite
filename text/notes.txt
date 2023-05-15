@@ -1,0 +1,23 @@
+Fitur pada bot ini:
+
+*YouTube*
+1. YouTube Downloader (/ytmp4)
+2. YouTube Converter MP3 (/ytmp3)
+
+*Instagram*
+1. Instagram Feed/Reels Downloader (/igdown)
+2. Instagram Stories Downloader (/igstories)
+
+*TikTok*
+1. TikTok Video Downloader (/ttdown)
+
+*Chat AI*
+1. Berinteraksi dengan ChatGPT yang canggih (/gpt)
+2. Berinteraksi dengan SimSimi yang asik (/simi)
+
+*Lain-lain*
+1. Image to Sticker (/stiker)
+2. Jadwal Kuliah (/jadwal)
+3. About (/about)
+
+Gunakan / saat memanggil. Contoh /ytmp4
