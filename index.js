@@ -170,7 +170,7 @@ client.on("message", async (message) => {
     } else if (
       !answerOptions.includes(message.body) &&
       message.body !== "/endgame" &&
-      isTebak === true
+      message.body !== "/tebak"
     ) {
       client.sendMessage(
         message.from,
