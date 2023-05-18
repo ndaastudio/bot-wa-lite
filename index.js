@@ -24,8 +24,8 @@ const client = new Client({
   puppeteer: {
     headless: true,
     args: ["--no-sandbox"],
-    executablePath: "/usr/bin/google-chrome",
-    // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    // executablePath: "/usr/bin/google-chrome",
+    executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
   },
 });
 
@@ -151,26 +151,23 @@ client.on("message", async (message) => {
         message.from,
         "Pikirkan tokoh apa yang ingin ditebak, kemudian ketik /tebak"
       );
-    } else if (
-      message.body.toLowerCase() === "/tebak" &&
-      isTebak === false &&
-      isStart === true
-    ) {
-      isTebak = true;
-      playAkinator(client, message, isStart, isTebak);
     } else if (message.body === "/about") {
       about(client, message.from);
     }
   } else if (isStart === true) {
     const answerOptions = ["0", "1", "2", "3"];
-    if (message.body.toLowerCase() === "/endgame") {
+    if (message.body.toLowerCase() === "/tebak" && isStart === true) {
+      isTebak = true;
+      playAkinator(client, message);
+    } else if (message.body.toLowerCase() === "/endgame") {
       isStart = false;
       isTebak = false;
       client.sendMessage(message.from, "Game berakhir!");
     } else if (
       !answerOptions.includes(message.body) &&
       message.body !== "/endgame" &&
-      message.body !== "/tebak"
+      message.body !== "/tebak" &&
+      isStart === true
     ) {
       client.sendMessage(
         message.from,
