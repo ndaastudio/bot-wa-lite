@@ -159,7 +159,7 @@ client.on("message", async (message) => {
         "Kamu sudah tidak dalam sesi game! Untuk memulai sesi game, ketik /startgame"
       );
     } else if (message.body.toLowerCase() === "/endgame" && isStart === false) {
-      message.reply("Kamu sudah tidak dalam sesi game!");
+      message.reply("Kamu sudah tidak dalam sesi game");
     } else if (message.body === "/about") {
       about(client, message.from);
     }
@@ -174,14 +174,6 @@ client.on("message", async (message) => {
       isStart = false;
       isTebak = false;
       client.sendMessage(message.from, "Game berakhir!");
-    } else if (
-      message.body.toLowerCase() === "/tebak" &&
-      isStart === false &&
-      isTebak === false
-    ) {
-      message.reply(
-        "Kamu sudah tidak dalam sesi game! Untuk memulai sesi game, ketik /startgame"
-      );
     } else if (
       !answerOptions.includes(message.body) &&
       message.body !== "/endgame" &&
