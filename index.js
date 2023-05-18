@@ -169,7 +169,8 @@ client.on("message", async (message) => {
       client.sendMessage(message.from, "Game berakhir!");
     } else if (
       !answerOptions.includes(message.body) &&
-      message.body !== "/endgame"
+      message.body !== "/endgame" &&
+      isTebak === true
     ) {
       client.sendMessage(
         message.from,
