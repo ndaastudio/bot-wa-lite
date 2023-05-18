@@ -145,13 +145,18 @@ client.on("message", async (message) => {
         });
       }
     } else if (message.body.toLowerCase() === "/startgame") {
+      isStart = true;
       client.sendMessage(message.from, "Game dimulai!");
       client.sendMessage(
         message.from,
         "Pikirkan tokoh apa yang ingin ditebak, kemudian ketik /tebak"
       );
+    } else if (
+      message.body.toLowerCase() === "/tebak" &&
+      isTebak === false &&
+      isStart === true
+    ) {
       isTebak = true;
-    } else if (message.body.toLowerCase() === "/tebak" && isTebak === true) {
       playAkinator(client, message, isStart, isTebak);
     } else if (message.body === "/about") {
       about(client, message.from);
