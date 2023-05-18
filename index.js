@@ -16,6 +16,7 @@ const {
 const tiktokDownloader = require("./lib/handler/tiktok-downloader");
 const tanyaGPT = require("./lib/handler/chat-gpt");
 const tanyaSimi = require("./lib/handler/chat-simi");
+const { playAkinator } = require("./lib/handler/akinator");
 
 const client = new Client({
   authStrategy: new LocalAuth(),
@@ -23,8 +24,8 @@ const client = new Client({
   puppeteer: {
     headless: true,
     args: ["--no-sandbox"],
-    executablePath: "/usr/bin/google-chrome",
-    // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    // executablePath: "/usr/bin/google-chrome",
+    executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
   },
 });
 
@@ -54,94 +55,121 @@ client.on("auth_failure", (msg) => {
 
 client.initialize();
 
+let isStart = false;
+let isTebak = false;
 client.on("message", async (message) => {
   let sender = (await message.getContact()).pushname;
-
-  if (
-    message.body.toLowerCase() === "halo" ||
-    message.body.toLowerCase() === "p" ||
-    message.body.toLowerCase() === "hai" ||
-    message.body.toLowerCase() === "hei" ||
-    message.body.toLowerCase() === "woi"
-  ) {
-    sendGreeting(client, message.from, sender);
-  } else if (message.body === "/start") {
-    notes(client, message.from);
-  } else if (message.body === "/jadwal") {
-    let content = getMataKuliah();
-    if (content === null) {
-      content = "Hari ini tidak ada jadwal kuliah";
-      client.sendMessage(message.from, content);
-    } else {
-      client.sendMessage(message.from, content);
-    }
-  } else if (message.body.startsWith("/ytmp4 ")) {
-    youtubeDownloaderMp4(message.body.split(" ")[1], client, message);
-  } else if (message.body === "/ytmp4") {
-    const content =
-      "Untuk mendownload YouTube, gunakan format */ytmp4 _LINK_YOUTUBE_*\nContoh: /ytmp4 https://youtu.be/w4SLZ8rRcJk";
-    client.sendMessage(message.from, content);
-  } else if (message.body.startsWith("/ytmp3 ")) {
-    youtubeDownloaderMp3(message.body.split(" ")[1], client, message);
-  } else if (message.body === "/ytmp3") {
-    const content =
-      "Untuk mengkonversi YouTube ke MP3, gunakan format */ytmp3 _LINK_YOUTUBE_*\nContoh: /ytmp3 https://youtu.be/w4SLZ8rRcJk";
-    client.sendMessage(message.from, content);
-  } else if (message.body.startsWith("/igdown ")) {
-    feedReelDown(message.body.split(" ")[1], client, message);
-  } else if (message.body === "/igdown") {
-    const content =
-      "Untuk mendownload Feed/Reels, gunakan format */igdown _LINK_POST_*\nContoh: /igdown https://www.instagram.com/p/CpxmyyFLCbX/";
-    client.sendMessage(message.from, content);
-  } else if (message.body.startsWith("/igstories ")) {
-    storiesDown(message.body.split(" ")[1], client, message);
-  } else if (message.body === "/igstories") {
-    const content =
-      "Untuk mendownload IG Stories, gunakan format */igstories _USERNAME_IG_*\nContoh: /igstories instagram";
-    client.sendMessage(message.from, content);
-  } else if (message.body.startsWith("/ttdown ")) {
-    tiktokDownloader(message.body.split(" ")[1], client, message);
-  } else if (message.body.toLowerCase() === "/ttdown") {
-    const content =
-      "Untuk mendownload video TikTok tanpa watermark, gunakan format */ttdown _LINK_TIKTOK_*\nContoh: /ttdown https://vt.tiktok.com/ZSL1uaELT/";
-    client.sendMessage(message.from, content);
-  } else if (message.body.startsWith("/gpt ")) {
-    tanyaGPT(message.body.replace("/gpt ", ""), message);
-  } else if (message.body.toLowerCase() === "/gpt") {
-    const content =
-      "Untuk berinteraksi dengan AI ChatGPT, gunakan format */gpt _KATA_KUNCI_*\nContoh: /gpt apa itu cinta?";
-    client.sendMessage(message.from, content);
-  } else if (message.body.startsWith("/simi ")) {
-    tanyaSimi(message.body.replace("/simi ", ""), message);
-  } else if (message.body.toLowerCase() === "/simi") {
-    const content =
-      "Untuk berinteraksi dengan SimSimi, gunakan format */simi _KATA_KUNCI_*\nContoh: /simi apa itu cinta?";
-    client.sendMessage(message.from, content);
-  } else if (message.body === "/stiker") {
-    if (message.type === "image") {
-      const img = await message.downloadMedia();
-      client
-        .sendMessage(message.from, img, {
-          sendMediaAsSticker: true,
-          stickerAuthor: "TTI'21 WA BOT",
-          stickerName: sender,
-        })
-        .then(() => {
-          client.sendMessage(message.from, "Stiker terkirim!");
-        });
-    } else {
+  if (isStart === false) {
+    if (
+      message.body.toLowerCase() === "halo" ||
+      message.body.toLowerCase() === "p" ||
+      message.body.toLowerCase() === "hai" ||
+      message.body.toLowerCase() === "hei" ||
+      message.body.toLowerCase() === "woi"
+    ) {
+      sendGreeting(client, message.from, sender);
+    } else if (message.body === "/start") {
+      notes(client, message.from);
+    } else if (message.body === "/jadwal") {
+      let content = getMataKuliah();
+      if (content === null) {
+        content = "Hari ini tidak ada jadwal kuliah";
+        client.sendMessage(message.from, content);
+      } else {
+        client.sendMessage(message.from, content);
+      }
+    } else if (message.body.startsWith("/ytmp4 ")) {
+      youtubeDownloaderMp4(message.body.split(" ")[1], client, message);
+    } else if (message.body === "/ytmp4") {
       const content =
-        "/imgtostkr harus diikuti dengan gambar atau foto.\nContoh:";
-      client.sendMessage(message.from, content).then(() => {
-        const media = MessageMedia.fromFilePath(
-          path.join(__dirname, "./media/images/example.png")
-        );
-        client.sendMessage(message.from, media, {
-          caption: "/imgtostkr",
+        "Untuk mendownload YouTube, gunakan format */ytmp4 _LINK_YOUTUBE_*\nContoh: /ytmp4 https://youtu.be/w4SLZ8rRcJk";
+      client.sendMessage(message.from, content);
+    } else if (message.body.startsWith("/ytmp3 ")) {
+      youtubeDownloaderMp3(message.body.split(" ")[1], client, message);
+    } else if (message.body === "/ytmp3") {
+      const content =
+        "Untuk mengkonversi YouTube ke MP3, gunakan format */ytmp3 _LINK_YOUTUBE_*\nContoh: /ytmp3 https://youtu.be/w4SLZ8rRcJk";
+      client.sendMessage(message.from, content);
+    } else if (message.body.startsWith("/igdown ")) {
+      feedReelDown(message.body.split(" ")[1], client, message);
+    } else if (message.body === "/igdown") {
+      const content =
+        "Untuk mendownload Feed/Reels, gunakan format */igdown _LINK_POST_*\nContoh: /igdown https://www.instagram.com/p/CpxmyyFLCbX/";
+      client.sendMessage(message.from, content);
+    } else if (message.body.startsWith("/igstories ")) {
+      storiesDown(message.body.split(" ")[1], client, message);
+    } else if (message.body === "/igstories") {
+      const content =
+        "Untuk mendownload IG Stories, gunakan format */igstories _USERNAME_IG_*\nContoh: /igstories instagram";
+      client.sendMessage(message.from, content);
+    } else if (message.body.startsWith("/ttdown ")) {
+      tiktokDownloader(message.body.split(" ")[1], client, message);
+    } else if (message.body.toLowerCase() === "/ttdown") {
+      const content =
+        "Untuk mendownload video TikTok tanpa watermark, gunakan format */ttdown _LINK_TIKTOK_*\nContoh: /ttdown https://vt.tiktok.com/ZSL1uaELT/";
+      client.sendMessage(message.from, content);
+    } else if (message.body.startsWith("/gpt ")) {
+      tanyaGPT(message.body.replace("/gpt ", ""), message);
+    } else if (message.body.toLowerCase() === "/gpt") {
+      const content =
+        "Untuk berinteraksi dengan AI ChatGPT, gunakan format */gpt _KATA_KUNCI_*\nContoh: /gpt apa itu cinta?";
+      client.sendMessage(message.from, content);
+    } else if (message.body.startsWith("/simi ")) {
+      tanyaSimi(message.body.replace("/simi ", ""), message);
+    } else if (message.body.toLowerCase() === "/simi") {
+      const content =
+        "Untuk berinteraksi dengan SimSimi, gunakan format */simi _KATA_KUNCI_*\nContoh: /simi apa itu cinta?";
+      client.sendMessage(message.from, content);
+    } else if (message.body === "/stiker") {
+      if (message.type === "image") {
+        const img = await message.downloadMedia();
+        client
+          .sendMessage(message.from, img, {
+            sendMediaAsSticker: true,
+            stickerAuthor: "TTI'21 WA BOT",
+            stickerName: sender,
+          })
+          .then(() => {
+            client.sendMessage(message.from, "Stiker terkirim!");
+          });
+      } else {
+        const content =
+          "/imgtostkr harus diikuti dengan gambar atau foto.\nContoh:";
+        client.sendMessage(message.from, content).then(() => {
+          const media = MessageMedia.fromFilePath(
+            path.join(__dirname, "./media/images/example.png")
+          );
+          client.sendMessage(message.from, media, {
+            caption: "/imgtostkr",
+          });
         });
-      });
+      }
+    } else if (message.body.toLowerCase() === "/startgame") {
+      client.sendMessage(message.from, "Game dimulai!");
+      client.sendMessage(
+        message.from,
+        "Pikirkan tokoh apa yang ingin ditebak, kemudian ketik /tebak"
+      );
+      isTebak = true;
+    } else if (message.body.toLowerCase() === "/tebak" && isTebak === true) {
+      playAkinator(client, message, isStart);
+    } else if (message.body === "/about") {
+      about(client, message.from);
     }
-  } else if (message.body === "/about") {
-    about(client, message.from);
+  } else if (isStart === true) {
+    const answerOptions = ["0", "1", "2", "3", "4"];
+    if (message.body.toLowerCase() === "/endgame") {
+      isStart = false;
+      isTebak = false;
+      client.sendMessage(message.from, "Game berakhir!");
+    } else if (
+      !answerOptions.includes(message.body) &&
+      message.body !== "/endgame"
+    ) {
+      client.sendMessage(
+        message.from,
+        "Anda masih dalam sesi game, silahkan selesaikan game terlebih dahulu! Untuk mengakhiri game, ketik /endgame"
+      );
+    }
   }
 });

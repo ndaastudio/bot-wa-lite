@@ -17,7 +17,8 @@ Fitur pada bot ini:
 
 *Lain-lain*
 1. Image to Sticker (/stiker)
-2. Jadwal Kuliah (/jadwal)
-3. About (/about)
+2. Game Tebak-Tebakan (/startgame)
+3. Jadwal Kuliah (/jadwal)
+4. About (/about)
 
 Gunakan / saat memanggil. Contoh /ytmp4
