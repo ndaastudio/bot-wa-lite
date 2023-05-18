@@ -144,25 +144,44 @@ client.on("message", async (message) => {
           });
         });
       }
-    } else if (message.body.toLowerCase() === "/startgame") {
+    } else if (
+      message.body.toLowerCase() === "/startgame" &&
+      isStart === false
+    ) {
       isStart = true;
       client.sendMessage(message.from, "Game dimulai!");
       client.sendMessage(
         message.from,
         "Pikirkan tokoh apa yang ingin ditebak, kemudian ketik /tebak"
       );
+    } else if (message.body.toLowerCase() === "/tebak" && isStart === false) {
+      message.reply(
+        "Kamu sudah tidak dalam sesi game! Untuk memulai sesi game, ketik /startgame"
+      );
+    } else if (message.body.toLowerCase() === "/endgame" && isStart === false) {
+      message.reply("Kamu sudah tidak dalam sesi game!");
     } else if (message.body === "/about") {
       about(client, message.from);
     }
   } else if (isStart === true) {
     const answerOptions = ["0", "1", "2", "3"];
-    if (message.body.toLowerCase() === "/tebak" && isStart === true) {
+    if (message.body.toLowerCase() === "/startgame") {
+      message.reply("Kamu sudah dalam sesi game!");
+    } else if (message.body.toLowerCase() === "/tebak") {
       isTebak = true;
       playAkinator(client, message);
     } else if (message.body.toLowerCase() === "/endgame") {
       isStart = false;
       isTebak = false;
       client.sendMessage(message.from, "Game berakhir!");
+    } else if (
+      message.body.toLowerCase() === "/tebak" &&
+      isStart === false &&
+      isTebak === false
+    ) {
+      message.reply(
+        "Kamu sudah tidak dalam sesi game! Untuk memulai sesi game, ketik /startgame"
+      );
     } else if (
       !answerOptions.includes(message.body) &&
       message.body !== "/endgame" &&
@@ -171,7 +190,7 @@ client.on("message", async (message) => {
     ) {
       client.sendMessage(
         message.from,
-        "Anda masih dalam sesi game, silahkan selesaikan game terlebih dahulu! Untuk mengakhiri game, ketik /endgame"
+        "Kamu masih dalam sesi game, silahkan selesaikan game terlebih dahulu! Untuk mengakhiri game, ketik /endgame"
       );
     }
   }
