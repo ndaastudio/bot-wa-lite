@@ -151,12 +151,8 @@ client.on("message", async (message) => {
         "Pikirkan tokoh apa yang ingin ditebak, kemudian ketik /tebak"
       );
       isTebak = true;
-    } else if (
-      message.body.toLowerCase() === "/tebak" &&
-      isTebak === true &&
-      isStart === false
-    ) {
-      playAkinator(client, message, isStart);
+    } else if (message.body.toLowerCase() === "/tebak" && isTebak === true) {
+      playAkinator(client, message, isStart, isTebak);
     } else if (message.body === "/about") {
       about(client, message.from);
     }
