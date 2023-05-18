@@ -151,13 +151,17 @@ client.on("message", async (message) => {
         "Pikirkan tokoh apa yang ingin ditebak, kemudian ketik /tebak"
       );
       isTebak = true;
-    } else if (message.body.toLowerCase() === "/tebak" && isTebak === true) {
+    } else if (
+      message.body.toLowerCase() === "/tebak" &&
+      isTebak === true &&
+      isStart === false
+    ) {
       playAkinator(client, message, isStart);
     } else if (message.body === "/about") {
       about(client, message.from);
     }
   } else if (isStart === true) {
-    const answerOptions = ["0", "1", "2", "3", "4"];
+    const answerOptions = ["0", "1", "2", "3"];
     if (message.body.toLowerCase() === "/endgame") {
       isStart = false;
       isTebak = false;
