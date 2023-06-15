@@ -11,9 +11,10 @@ Fitur pada bot ini:
 *TikTok*
 1. TikTok Video Downloader (/ttdown)
 
-*Chat AI*
+*AI (Artificial Intelligence)*
 1. Berinteraksi dengan ChatGPT yang canggih (/gpt)
 2. Berinteraksi dengan SimSimi yang asik (/simi)
+3. Membuat gambar dengan bantuan AI (/image)
 
 *Lain-lain*
 1. Image to Sticker (/stiker)
