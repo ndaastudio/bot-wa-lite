@@ -116,7 +116,7 @@ client.on("message", async (message) => {
         "Untuk berinteraksi dengan AI ChatGPT, gunakan format */gpt _KATA_KUNCI_*\nContoh: /gpt apa itu cinta?";
       client.sendMessage(message.from, content);
     } else if (message.body.startsWith("/image ")) {
-      imageGPT(message.body.replace("/image ", ""), message);
+      imageGPT(message.body.replace("/image ", ""), client, message);
     } else if (message.body.toLowerCase() === "/image") {
       const content =
         "Untuk membuat gambar dengan AI, gunakan format */image _KATA_KUNCI_*\nContoh: /image a cute baby sea otter";
