@@ -70,6 +70,7 @@ client.initialize();
 let isStart = false;
 let isTebak = false;
 client.on("message", async (message) => {
+  console.log(await message.getContact());
   let sender = (await message.getContact()).pushname;
   if (isStart === false) {
     if (
