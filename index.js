@@ -7,7 +7,7 @@ const {
 } = require("./lib/handler/youtube-downloader");
 const sendGreeting = require("./lib/handler/greeting");
 const { getMataKuliah, getLinkAbsen } = require("./lib/handler/mata-kuliah");
-const { getBirthdayText } = require("./lib/handler/birthday");
+const { sendBirtdayText } = require("./lib/handler/birthday");
 const notes = require("./lib/notes");
 const about = require("./lib/about");
 const {
@@ -48,17 +48,11 @@ client.on("ready", () => {
     if (content !== null) {
       client.sendMessage(idGrup, content);
     }
-    const numberTarget = "6281379216886@c.us";
-    const textBirtday = getBirthdayText();
-    console.log(textBirtday);
-    if (textBirtday !== null) {
-      client.sendMessage(numberTarget, textBirtday).then(() => {
-        client.sendMessage(
-          numberTarget,
-          MessageMedia.fromFilePath("./media/videos/video_ultah.mp4")
-        );
-      });
-    }
+    sendBirtdayText(
+      client,
+      "6281379216886@c.us",
+      "./media/videos/video_ultah.mp4"
+    );
   }, 1000 * 60);
 });
 
