@@ -48,11 +48,10 @@ client.on("ready", () => {
     if (content !== null) {
       client.sendMessage(idGrup, content);
     }
-    sendBirtdayText(
-      client,
-      "6281379216886@c.us",
-      "./media/videos/video_ultah.mp4"
+    const media = MessageMedia.fromFilePath(
+      path.join(__dirname, "./media/videos/video_ultah.mp4")
     );
+    sendBirtdayText(client, "6281379216886@c.us", media);
   }, 1000 * 60);
 });
 
