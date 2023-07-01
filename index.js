@@ -50,6 +50,7 @@ client.on("ready", () => {
     }
     const numberTarget = "6281379216886@c.us";
     const textBirtday = getBirthdayText();
+    console.log(textBirtday);
     if (textBirtday !== null) {
       client.sendMessage(numberTarget, textBirtday).then(() => {
         client.sendMessage(
