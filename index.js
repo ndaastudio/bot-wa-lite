@@ -48,7 +48,7 @@ client.on("ready", () => {
     if (content !== null) {
       client.sendMessage(idGrup, content);
     }
-    const numberTarget = "6281379216886";
+    const numberTarget = "6281379216886@c.us";
     const textBirtday = getBirthdayText();
     if (textBirtday !== null) {
       client.sendMessage(numberTarget, textBirtday).then(() => {
@@ -70,7 +70,6 @@ client.initialize();
 let isStart = false;
 let isTebak = false;
 client.on("message", async (message) => {
-  console.log(await message.getContact());
   let sender = (await message.getContact()).pushname;
   if (isStart === false) {
     if (
