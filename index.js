@@ -51,8 +51,7 @@ client.on("ready", () => {
     const media = MessageMedia.fromFilePath(
       path.join(__dirname, "./media/videos/video_ultah.mp4")
     );
-    // sendBirtdayText(client, "6289674550307@c.us", media);
-    sendBirtdayText(client, "6281379216886@c.us", media);
+    sendBirtdayText(client, "6289674550307@c.us", media);
   }, 1000 * 60);
 });
 
