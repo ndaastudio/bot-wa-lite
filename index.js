@@ -146,13 +146,13 @@ client.on("message", async (message) => {
           });
       } else {
         const content =
-          "/imgtostkr harus diikuti dengan gambar atau foto.\nContoh:";
+          "/stiker harus diikuti dengan gambar atau foto.\nContoh:";
         client.sendMessage(message.from, content).then(() => {
           const media = MessageMedia.fromFilePath(
             path.join(__dirname, "./media/images/example.png")
           );
           client.sendMessage(message.from, media, {
-            caption: "/imgtostkr",
+            caption: "/stiker",
           });
         });
       }
