@@ -74,10 +74,6 @@ client.on("message", async (message) => {
       message.body.toLowerCase() === "woi"
     ) {
       sendGreeting(client, message.from, sender);
-    } else if (message.body === "/tag") {
-      let content =
-        "@Nisa TE21 @Fidela TE21 @Reynaldo TE21 @Fajri TE21 @Ahmad Firman TE21 @Husin Almahdi @~Daniel Febrianto @~Riki Joan";
-      client.sendMessage(message.from, content);
     } else if (message.body === "/start") {
       notes(client, message.from);
     } else if (message.body === "/jadwal") {
