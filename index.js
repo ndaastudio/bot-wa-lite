@@ -6,7 +6,14 @@ const {
   youtubeDownloaderMp4,
 } = require("./lib/handler/youtube-downloader");
 const sendGreeting = require("./lib/handler/greeting");
-const { getMataKuliah, getLinkAbsen } = require("./lib/handler/mata-kuliah");
+const {
+  getMataKuliahTTI,
+  getLinkAbsenTTI,
+} = require("./lib/handler/mata-kuliah-tti");
+const {
+  getMataKuliahTekkim,
+  getLinkAbsenTekkim,
+} = require("./lib/handler/mata-kuliah-tekkim");
 // const { sendBirtdayText } = require("./lib/handler/birthday");
 const notes = require("./lib/notes");
 const about = require("./lib/about");
@@ -43,10 +50,15 @@ client.on("loading_screen", (msg) => {
 client.on("ready", () => {
   console.log("Client Ready");
   setInterval(() => {
-    const idGrup = "120363042661479961@g.us";
-    const content = getLinkAbsen();
-    if (content !== null) {
-      client.sendMessage(idGrup, content);
+    const idGrupTTI = "120363042661479961@g.us";
+    const contentTTI = getLinkAbsenTTI();
+    if (contentTTI !== null) {
+      client.sendMessage(idGrupTTI, contentTTI);
+    }
+    const idGrupTekkim = "120363167952315878@g.us";
+    const contentTekkim = getLinkAbsenTekkim();
+    if (contentTekkim !== null) {
+      client.sendMessage(idGrupTekkim, contentTekkim);
     }
     // const media = MessageMedia.fromFilePath(
     //   path.join(__dirname, "./media/videos/video_ultah.mp4")
@@ -77,13 +89,8 @@ client.on("message", async (message) => {
     } else if (message.body === "/start") {
       notes(client, message.from);
     } else if (message.body === "/jadwal") {
-      let content = getMataKuliah();
-      if (content === null) {
-        content = "Hari ini tidak ada jadwal kuliah";
-        client.sendMessage(message.from, content);
-      } else {
-        client.sendMessage(message.from, content);
-      }
+      let content = `*Teknik Elektro*\n${getMataKuliahTTI()}\n\n*Teknik Kimia*\n${getMataKuliahTekkim()}`;
+      client.sendMessage(message.from, content);
     } else if (message.body.startsWith("/ytmp4 ")) {
       youtubeDownloaderMp4(message.body.split(" ")[1], client, message);
     } else if (message.body === "/ytmp4") {
