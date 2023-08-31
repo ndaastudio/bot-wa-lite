@@ -19,7 +19,7 @@
     "openai": "^3.2.1",
     "qrcode-terminal": "^0.12.0",
     "tiktok-video-downloader": "^1.0.4",
-    "whatsapp-web.js": "^1.19.5",
+    "whatsapp-web.js": "^1.22.2-alpha.0",
     "ytdl-core": "^4.11.4"
   }
 }
