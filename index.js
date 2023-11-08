@@ -21,7 +21,6 @@ const {
   feedReelDown,
   storiesDown,
 } = require("./lib/handler/instagram-downloader");
-const tiktokDownloader = require("./lib/handler/tiktok-downloader");
 const tanyaGPT = require("./lib/handler/chat-gpt");
 const imageGPT = require("./lib/handler/dall-e-image-generator");
 const tanyaSimi = require("./lib/handler/chat-simi");
@@ -114,12 +113,6 @@ client.on("message", async (message) => {
     } else if (message.body === "/igstories") {
       const content =
         "Untuk mendownload IG Stories, gunakan format */igstories _USERNAME_IG_*\nContoh: /igstories instagram";
-      client.sendMessage(message.from, content);
-    } else if (message.body.startsWith("/ttdown ")) {
-      tiktokDownloader(message.body.split(" ")[1], client, message);
-    } else if (message.body.toLowerCase() === "/ttdown") {
-      const content =
-        "Untuk mendownload video TikTok tanpa watermark, gunakan format */ttdown _LINK_TIKTOK_*\nContoh: /ttdown https://vt.tiktok.com/ZSL1uaELT/";
       client.sendMessage(message.from, content);
     } else if (message.body.startsWith("/gpt ")) {
       tanyaGPT(message.body.replace("/gpt ", ""), message);
