@@ -48,16 +48,45 @@ client.on("loading_screen", (msg) => {
 
 client.on("ready", () => {
   console.log("Client Ready");
-  setInterval(() => {
-    const idGrupTTI = "120363042661479961@g.us";
+  setInterval(async () => {
     const contentTTI = getLinkAbsenTTI();
     if (contentTTI !== null) {
-      client.sendMessage(idGrupTTI, contentTTI);
+      const chats = await client.getChats();
+      chats.forEach(async (chat) => {
+        if (chat.isGroup) {
+          if (chat.id._serialized == "120363042661479961@g.us") {
+            let text = getLinkAbsenTTI();
+            let mentions = [];
+
+            for (let participant of chat.participants) {
+              mentions.push(participant.id._serialized);
+              text += `\n\n@${participant.id.user}`;
+            }
+
+            await chat.sendMessage(text, { mentions: mentions });
+          }
+        }
+      });
     }
-    const idGrupTekkim = "120363167952315878@g.us";
+
     const contentTekkim = getLinkAbsenTekkim();
     if (contentTekkim !== null) {
-      client.sendMessage(idGrupTekkim, contentTekkim);
+      const chats = await client.getChats();
+      chats.forEach(async (chat) => {
+        if (chat.isGroup) {
+          if (chat.id._serialized == "120363167952315878@g.us") {
+            let text = getLinkAbsenTekkim();
+            let mentions = [];
+
+            for (let participant of chat.participants) {
+              mentions.push(participant.id._serialized);
+              text += `\n\n@${participant.id.user}`;
+            }
+
+            await chat.sendMessage(text, { mentions: mentions });
+          }
+        }
+      });
     }
     // const media = MessageMedia.fromFilePath(
     //   path.join(__dirname, "./media/videos/video_ultah.mp4")
