@@ -8,9 +8,6 @@ Fitur pada bot ini:
 1. Instagram Feed/Reels Downloader (/igdown)
 2. Instagram Stories Downloader (/igstories)
 
-*TikTok*
-1. TikTok Video Downloader (/ttdown)
-
 *AI (Artificial Intelligence)*
 1. Berinteraksi dengan ChatGPT yang canggih (/gpt)
 2. Berinteraksi dengan SimSimi yang asik (/simi)

@@ -60,7 +60,7 @@ client.on("ready", () => {
 
             for (let participant of chat.participants) {
               mentions.push(participant.id._serialized);
-              text += `\n\n@${participant.id.user}`;
+              text += `@${participant.id.user} `;
             }
 
             await chat.sendMessage(text, { mentions: mentions });
@@ -80,7 +80,7 @@ client.on("ready", () => {
 
             for (let participant of chat.participants) {
               mentions.push(participant.id._serialized);
-              text += `\n\n@${participant.id.user}`;
+              text += `@${participant.id.user} `;
             }
 
             await chat.sendMessage(text, { mentions: mentions });
